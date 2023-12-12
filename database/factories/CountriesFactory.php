@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\countries;
+use App\Models\Countries;
 
 class CountriesFactory extends Factory
 {

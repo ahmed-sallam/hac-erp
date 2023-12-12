@@ -4,8 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Item;
-use App\Models\item_sets;
+use App\Models\Items;
+use App\Models\ItemSets;
 
 class ItemSetsFactory extends Factory
 {
@@ -22,8 +22,8 @@ class ItemSetsFactory extends Factory
     public function definition(): array
     {
         return [
-            'set_item_id' => Item::factory(),
-            'member_item_id' => Item::factory(),
+            'set_item_id' => Items::factory(),
+            'member_item_id' => Items::factory(),
             'quantity' => $this->faker->randomNumber(),
         ];
     }

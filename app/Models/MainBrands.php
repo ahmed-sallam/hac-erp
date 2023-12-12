@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class SubBrands extends Model
+class MainBrands extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +19,6 @@ class SubBrands extends Model
     protected $fillable = [
         'name_ar',
         'name_en',
-        'code',
-        'main_brand_id',
     ];
 
     /**
@@ -29,11 +28,10 @@ class SubBrands extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'main_brand_id' => 'integer',
     ];
 
-    public function mainBrand(): BelongsTo
+    public function subBrands(): HasMany
     {
-        return $this->belongsTo(MainBrands::class);
+        return $this->hasMany(SubBrands::class);
     }
 }

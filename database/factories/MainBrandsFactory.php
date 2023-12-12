@@ -4,8 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\main_brands;
-
+use App\Models\MainBrands;
+use Faker\Factory as Faker;
 class MainBrandsFactory extends Factory
 {
     /**
@@ -20,9 +20,10 @@ class MainBrandsFactory extends Factory
      */
     public function definition(): array
     {
+        $arFaker = Faker::create('ar_SA');
         return [
-            'name_ar' => $this->faker->regexify('[A-Za-z0-9]{25}'),
-            'name_en' => $this->faker->regexify('[A-Za-z0-9]{25}'),
+            'name_ar' => $arFaker->company,
+            'name_en' => $this->faker->company,
         ];
     }
 }

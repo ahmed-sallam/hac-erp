@@ -4,13 +4,13 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Category;
-use App\Models\Country;
-use App\Models\MainBrand;
-use App\Models\Store;
-use App\Models\StoreLocation;
-use App\Models\SubBrand;
-use App\Models\items;
+use App\Models\Categories;
+use App\Models\Countries;
+use App\Models\MainBrands;
+use App\Models\Stores;
+use App\Models\StoreLocations;
+use App\Models\SubBrands;
+use App\Models\Items;
 
 class ItemsFactory extends Factory
 {
@@ -36,12 +36,12 @@ class ItemsFactory extends Factory
             'is_original' => $this->faker->boolean(),
             'item_image' => $this->faker->regexify('[A-Za-z0-9]{255}'),
             'category_image' => $this->faker->regexify('[A-Za-z0-9]{255}'),
-            'main_brand_id' => MainBrand::factory(),
-            'sub_brand_id' => SubBrand::factory(),
-            'category_id' => Category::factory(),
-            'country_id' => Country::factory(),
-            'store_id' => Store::factory(),
-            'store_location_id' => StoreLocation::factory(),
+            'main_brand_id' => MainBrands::factory(),
+            'sub_brand_id' => SubBrands::factory(),
+            'category_id' => Categories::factory(),
+            'country_id' => Countries::factory(),
+            'store_id' => Stores::factory(),
+            'store_location_id' => StoreLocations::factory(),
         ];
     }
 }

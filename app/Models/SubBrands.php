@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class StoreLocations extends Model
+class SubBrands extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +19,8 @@ class StoreLocations extends Model
     protected $fillable = [
         'name_ar',
         'name_en',
-        'store_id',
+        'code',
+        'main_brand_id',
     ];
 
     /**
@@ -28,11 +30,11 @@ class StoreLocations extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'store_id' => 'integer',
+        'main_brand_id' => 'integer',
     ];
 
-    public function store(): BelongsTo
+    public function mainBrand(): BelongsTo
     {
-        return $this->belongsTo(Stores::class);
+        return $this->belongsTo(MainBrands::class);
     }
 }

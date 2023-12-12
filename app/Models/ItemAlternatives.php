@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class MainBrands extends Model
+class ItemAlternatives extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -16,8 +16,8 @@ class MainBrands extends Model
      * @var array
      */
     protected $fillable = [
-        'name_ar',
-        'name_en',
+        'item_1_number',
+        'item_2_number',
     ];
 
     /**
@@ -28,9 +28,4 @@ class MainBrands extends Model
     protected $casts = [
         'id' => 'integer',
     ];
-
-    public function subBrands(): HasMany
-    {
-        return $this->hasMany(SubBrands::class);
-    }
 }

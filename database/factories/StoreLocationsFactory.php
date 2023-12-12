@@ -4,8 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Store;
-use App\Models\store_locations;
+use App\Models\Stores;
+use App\Models\StoreLocations;
 
 class StoreLocationsFactory extends Factory
 {
@@ -24,7 +24,7 @@ class StoreLocationsFactory extends Factory
         return [
             'name_ar' => $this->faker->regexify('[A-Za-z0-9]{10}'),
             'name_en' => $this->faker->regexify('[A-Za-z0-9]{10}'),
-            'store_id' => Store::factory(),
+            'store_id' => Stores::factory(),
         ];
     }
 }

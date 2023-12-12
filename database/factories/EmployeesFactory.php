@@ -4,8 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Country;
-use App\Models\employees;
+use App\Models\Countries;
+use App\Models\Employees;
 
 class EmployeesFactory extends Factory
 {
@@ -26,7 +26,7 @@ class EmployeesFactory extends Factory
             'name_en' => $this->faker->regexify('[A-Za-z0-9]{100}'),
             'gov_id' => $this->faker->regexify('[A-Za-z0-9]{20}'),
             'joining_date' => $this->faker->date(),
-            'country_id' => Country::factory(),
+            'country_id' => Countries::factory(),
         ];
     }
 }

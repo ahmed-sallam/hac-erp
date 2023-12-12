@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ItemAlternatives extends Model
+class StoreLocations extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -15,8 +17,9 @@ class ItemAlternatives extends Model
      * @var array
      */
     protected $fillable = [
-        'item_1_number',
-        'item_2_number',
+        'name_ar',
+        'name_en',
+        'store_id',
     ];
 
     /**
@@ -26,5 +29,11 @@ class ItemAlternatives extends Model
      */
     protected $casts = [
         'id' => 'integer',
+        'store_id' => 'integer',
     ];
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Stores::class);
+    }
 }

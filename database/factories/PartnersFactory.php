@@ -4,9 +4,9 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Country;
-use App\Models\Employee;
-use App\Models\partners;
+use App\Models\Countries;
+use App\Models\Employees;
+use App\Models\Partners;
 
 class PartnersFactory extends Factory
 {
@@ -31,8 +31,8 @@ class PartnersFactory extends Factory
             'payment_type' => $this->faker->randomElement(["cash","credit"]),
             'credit_limit' => $this->faker->randomNumber(),
             'credit_period' => $this->faker->randomNumber(),
-            'country_id' => Country::factory(),
-            'employee_id' => Employee::factory(),
+            'country_id' => Countries::factory(),
+            'employee_id' => Employees::factory(),
         ];
     }
 }
