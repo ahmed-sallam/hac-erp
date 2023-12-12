@@ -27,15 +27,15 @@ class ItemsFactory extends Factory
     public function definition(): array
     {
         return [
-            'item_number' => $this->faker->regexify('[A-Za-z0-9]{25}'),
-            'description_ar' => $this->faker->regexify('[A-Za-z0-9]{255}'),
-            'description_en' => $this->faker->regexify('[A-Za-z0-9]{255}'),
-            'req_min' => $this->faker->randomNumber(),
-            'req_max' => $this->faker->randomNumber(),
+            'item_number' => $this->faker->regexify('[0-9]{25}'),
+            'description_ar' => $this->faker->realText(255),
+            'description_en' => $this->faker->realText(255),
+            'req_min' => $this->faker->numberBetween($min = 5, $max = 100),
+            'req_max' => $this->faker->numberBetween($min = 1000, $max = 9000),
             'is_set' => $this->faker->boolean(),
             'is_original' => $this->faker->boolean(),
-            'item_image' => $this->faker->regexify('[A-Za-z0-9]{255}'),
-            'category_image' => $this->faker->regexify('[A-Za-z0-9]{255}'),
+            'item_image' => $this->faker->realText(255),
+            'category_image' => $this->faker->realText(255),
             'main_brand_id' => MainBrands::factory(),
             'sub_brand_id' => SubBrands::factory(),
             'category_id' => Categories::factory(),

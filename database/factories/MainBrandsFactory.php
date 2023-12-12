@@ -22,8 +22,8 @@ class MainBrandsFactory extends Factory
     {
         $arFaker = Faker::create('ar_SA');
         return [
-            'name_ar' => $arFaker->company,
-            'name_en' => $this->faker->company,
+            'name_ar' => $arFaker->realText(20),
+            'name_en' => $this->faker->realText(20),
         ];
     }
 }

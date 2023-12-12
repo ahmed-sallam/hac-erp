@@ -26,8 +26,8 @@ class SubBrandsFactory extends Factory
         $arFaker = Faker::create('ar_SA');
 
         return [
-            'name_ar' => $arFaker->name,
-            'name_en' => $this->faker->name,
+            'name_ar' => $arFaker->realText(20),
+            'name_en' => $this->faker->realText(20),
             'code' => $this->faker->regexify('[A-Za-z0-9]{3}'),
             'main_brand_id' => MainBrands::factory(),
         ];

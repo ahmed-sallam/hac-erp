@@ -22,9 +22,9 @@ class EmployeesFactory extends Factory
     public function definition(): array
     {
         return [
-            'name_ar' => $this->faker->regexify('[A-Za-z0-9]{100}'),
-            'name_en' => $this->faker->regexify('[A-Za-z0-9]{100}'),
-            'gov_id' => $this->faker->regexify('[A-Za-z0-9]{20}'),
+            'name_ar' => $this->faker->realText(100),
+            'name_en' => $this->faker->realText(100),
+            'gov_id' => $this->faker->regexify('[0-9]{20}'),
             'joining_date' => $this->faker->date(),
             'country_id' => Countries::factory(),
         ];

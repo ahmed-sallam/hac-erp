@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Stores;
+use Faker\Factory as Faker;
 
 class StoresFactory extends Factory
 {
@@ -20,11 +21,13 @@ class StoresFactory extends Factory
      */
     public function definition(): array
     {
+        $arFaker = Faker::create('ar_SA');
+
         return [
-            'city_ar' => $this->faker->regexify('[A-Za-z0-9]{25}'),
-            'city_en' => $this->faker->regexify('[A-Za-z0-9]{25}'),
-            'name_ar' => $this->faker->regexify('[A-Za-z0-9]{25}'),
-            'name_en' => $this->faker->regexify('[A-Za-z0-9]{25}'),
+            'city_ar' => $arFaker->realText(20),
+            'city_en' => $this->faker->realText(25),
+            'name_ar' => $arFaker->realText(20),
+            'name_en' => $this->faker->realText(25),
         ];
     }
 }

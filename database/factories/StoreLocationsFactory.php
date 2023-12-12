@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Stores;
 use App\Models\StoreLocations;
+use Faker\Factory as Faker;
 
 class StoreLocationsFactory extends Factory
 {
@@ -21,9 +22,11 @@ class StoreLocationsFactory extends Factory
      */
     public function definition(): array
     {
+        $arFaker = Faker::create('ar_SA');
+
         return [
-            'name_ar' => $this->faker->regexify('[A-Za-z0-9]{10}'),
-            'name_en' => $this->faker->regexify('[A-Za-z0-9]{10}'),
+            'name_ar' => $arFaker->realText(10),
+            'name_en' => $this->faker->realText(10),
             'store_id' => Stores::factory(),
         ];
     }
