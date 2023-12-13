@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Resources;
+use Illuminate\Support\Facades\App;
 
 use App\Filament\Resources\StoresResource\Pages;
 use App\Filament\Resources\StoresResource\RelationManagers;
@@ -18,21 +19,20 @@ class StoresResource extends Resource
     protected static ?string $model = Stores::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('city_ar')
+                Forms\Components\TextInput::make('city_ar')->label(trans('stores.city_ar'))
                     ->required()
                     ->maxLength(25),
-                Forms\Components\TextInput::make('city_en')
+                Forms\Components\TextInput::make('city_en')->label(trans('stores.city_en'))
                     ->required()
                     ->maxLength(25),
-                Forms\Components\TextInput::make('name_ar')
+                Forms\Components\TextInput::make('name_ar')->label(trans('shared.name_ar'))
                     ->required()
                     ->maxLength(25),
-                Forms\Components\TextInput::make('name_en')
+                Forms\Components\TextInput::make('name_en')->label(trans('shared.name_en'))
                     ->required()
                     ->maxLength(25),
             ]);
@@ -40,15 +40,13 @@ class StoresResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $currentLocal = App::currentLocale();
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('city_ar')
+
+                Tables\Columns\TextColumn::make($currentLocal == 'ar' ?'city_ar':'city_en')->label(trans('stores.city'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('city_en')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('name_ar')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('name_en')
+                Tables\Columns\TextColumn::make($currentLocal == 'ar' ?'name_ar':'name_en')->label(trans('shared.name'))
                     ->searchable(),
             ])
             ->filters([
@@ -56,6 +54,8 @@ class StoresResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -78,5 +78,15 @@ class StoresResource extends Resource
             'create' => Pages\CreateStores::route('/create'),
             'edit' => Pages\EditStores::route('/{record}/edit'),
         ];
+    }
+    public static function getModelLabel(): string{
+        return trans('stores.store');
+    }
+    public static function getPluralModelLabel(): string{
+        return trans('stores.stores');
+    }
+    public static function getNavigationGroup(): string
+    {
+        return trans('stores.store_management');
     }
 }
