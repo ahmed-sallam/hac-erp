@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('material_request_lines', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
-            $table->foreignId('item_id')->constrained('Items');
-            $table->foreignId('material_request_id')->constrained('MaterialRequests');
+            $table->foreignId('item_id')->constrained('items');
+            $table->foreignId('material_request_id')->constrained('material_requests');
         });
 
         Schema::enableForeignKeyConstraints();

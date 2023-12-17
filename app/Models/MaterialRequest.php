@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MaterialRequest extends Model
 {
@@ -16,7 +16,7 @@ class MaterialRequest extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+//    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -42,6 +42,28 @@ class MaterialRequest extends Model
         'store_id' => 'integer',
         'employee_id' => 'integer',
     ];
+    protected $attributes = [
+        'status'=>'pending',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $lastItem = MaterialRequest::latest()->first();
+            if ($lastItem) {
+                $item_number =  (int) $lastItem->order_number;
+                $item_number = $item_number + 1;
+                $model->order_number = $item_number.'';
+            } else {
+
+                $currentYear = date('Y');
+
+                $model->order_number = $currentYear . '0001';
+            }
+        });
+
+    }
 
     public function store(): BelongsTo
     {
@@ -52,6 +74,7 @@ class MaterialRequest extends Model
     {
         return $this->belongsTo(Employees::class);
     }
+
     public function requestLines(): HasMany
     {
         return $this->hasMany(MaterialRequestLine::class);

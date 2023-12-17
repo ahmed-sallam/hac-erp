@@ -31,6 +31,7 @@ return new class extends Migration
             $table->foreignId('store_id')->constrained();
             $table->foreignId('store_location_id')->constrained();
             $table->unique(['item_number', 'main_brand_id', 'sub_brand_id', 'country_id']);
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();

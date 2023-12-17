@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('order_number', 20)->unique();
             $table->date('request_date');
-            $table->enum('status', ["pending","approved","rejected"]);
-            $table->foreignId('store_id')->constrained('Stores');
-            $table->foreignId('employee_id')->constrained('Employees');
+            $table->enum('status', ["pending","pricing","quotation","completed","rejected"]);
+            $table->foreignId('store_id')->constrained('stores');
+            $table->foreignId('employee_id')->constrained('employees');
+            $table->timestamps();
+
         });
 
         Schema::enableForeignKeyConstraints();

@@ -59,6 +59,6 @@ class DashboardPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ])->spa();
+            ]);
     }
 }

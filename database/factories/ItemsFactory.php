@@ -42,6 +42,7 @@ class ItemsFactory extends Factory
             'country_id' => Countries::factory(),
             'store_id' => Stores::factory(),
             'store_location_id' => StoreLocations::factory(),
+
         ];
     }
 }

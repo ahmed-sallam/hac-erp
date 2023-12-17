@@ -32,8 +32,8 @@ class DatabaseSeeder extends Seeder
         // Stores::truncate();
         // StoreLocations::truncate();
         // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        // Employees::factory()->count(2)->create();
-        // Items::factory()->count(2)->create();
+         Employees::factory()->count(2)->create();
+         Items::factory()->count(2)->create();
 
     }
 }

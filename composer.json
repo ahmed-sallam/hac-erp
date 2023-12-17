@@ -12,6 +12,7 @@
         "bezhansalleh/filament-language-switch": "^3.0",
         "filament/filament": "^3.0-stable",
         "guzzlehttp/guzzle": "^7.2",
+        "itsgoingd/clockwork": "^5.1",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8"
