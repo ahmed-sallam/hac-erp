@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\PurchaseQuotation;
+use App\Observers\PurchaseQuotationObserver;
 use Illuminate\Support\ServiceProvider;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 class AppServiceProvider extends ServiceProvider
@@ -20,10 +22,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        PurchaseQuotation::observe(PurchaseQuotationObserver::class);
+
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
                 ->locales(['ar','en']); // also accepts a closure
         });
- 
+
     }
 }

@@ -140,7 +140,8 @@ class MaterialRequestResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('updated_at')->label(trans('material_request.last_update'))
-                    ->date()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->dateTime()
                     ->sortable(),
             ])
             ->filters([
