@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Employees;
+use App\Models\Partners;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Partner;
 use App\Models\PurchaseInvoice;
 use App\Models\PurchaseQuotation;
 
@@ -27,7 +28,8 @@ class PurchaseInvoiceFactory extends Factory
             'invoice_date' => $this->faker->date(),
             'delivery_date' => $this->faker->date(),
             'invoice_type' => $this->faker->randomElement(["cash","credit"]),
-            'partner_id' => Partner::factory(),
+            'partner_id' => Partners::factory(),
+            'store_employee_id' => Employees::factory(),
             'purchase_quotation_id' => PurchaseQuotation::factory(),
             'discount' => $this->faker->randomFloat(2, 0, 999999.99),
             'sub_total' => $this->faker->randomFloat(2, 0, 999999.99),

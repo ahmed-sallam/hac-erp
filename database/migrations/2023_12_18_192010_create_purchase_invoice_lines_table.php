@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->decimal('price', 8, 2);
             $table->decimal('vat', 8, 2);
+            $table->decimal('discount', 8, 2);
             $table->foreignId('item_id')->constrained();
             $table->foreignId('purchase_invoice_id')->constrained();
             $table->timestamps();

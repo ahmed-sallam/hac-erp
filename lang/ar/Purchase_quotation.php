@@ -14,4 +14,13 @@ return [
     'rejected' => 'مرفوض',
     'quantity' => 'الكمية',
 
+    'invoice_number' => 'رقم الفاتورة',
+    'invoice_date' => 'تاريخ الفاتورة',
+    'invoice_type' => 'نوع الفاتورة',
+    'discount' => 'الخصم',
+    'sub_total' => 'الاجمالي الفرعي',
+    'total' => 'الاجمالي',
+    'delivery_date' => 'تاريخ الارسال',
+    'purchase_invoices' => 'فاتورة شراء',
+    'purchase_invoice' => 'فواتير الشراء',
 ];

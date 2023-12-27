@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('delivery_date');
             $table->enum('invoice_type', ["cash","credit"]);
             $table->foreignId('partner_id')->constrained();
+            $table->foreignId('store_employee_id')->constrained()->references('id')->on('employees');
             $table->foreignId('purchase_quotation_id')->constrained();
             $table->decimal('discount', 8, 2);
             $table->decimal('sub_total', 8, 2);

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Items;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Item;
@@ -26,7 +27,8 @@ class PurchaseInvoiceLineFactory extends Factory
             'quantity' => $this->faker->numberBetween(-10000, 10000),
             'price' => $this->faker->randomFloat(2, 0, 999999.99),
             'vat' => $this->faker->randomFloat(2, 0, 999999.99),
-            'item_id' => Item::factory(),
+            'discount' => $this->faker->randomFloat(2, 0, 999999.99),
+            'item_id' => Items::factory(),
             'purchase_invoice_id' => PurchaseInvoice::factory(),
         ];
     }

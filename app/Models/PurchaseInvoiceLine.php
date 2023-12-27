@@ -19,6 +19,7 @@ class PurchaseInvoiceLine extends Model
         'quantity',
         'price',
         'vat',
+        'discount',
         'item_id',
         'purchase_invoice_id',
     ];
@@ -32,13 +33,14 @@ class PurchaseInvoiceLine extends Model
         'id' => 'integer',
         'price' => 'decimal:2',
         'vat' => 'decimal:2',
+        'discount' => 'decimal:2',
         'item_id' => 'integer',
         'purchase_invoice_id' => 'integer',
     ];
 
     public function item(): BelongsTo
     {
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Items::class);
     }
 
     public function purchaseInvoice(): BelongsTo
