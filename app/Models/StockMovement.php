@@ -16,12 +16,12 @@ class StockMovement extends Model
      * @var array
      */
     protected $fillable = [
-        'quantity',
         'movement_type',
         'source_store_id',
         'destination_store_id',
-        'item_id',
         'employee_id',
+        'movement_date',
+        'reference',
     ];
 
     /**
@@ -33,27 +33,22 @@ class StockMovement extends Model
         'id' => 'integer',
         'source_store_id' => 'integer',
         'destination_store_id' => 'integer',
-        'item_id' => 'integer',
         'employee_id' => 'integer',
+        'movement_date' => 'date',
     ];
 
     public function sourceStore(): BelongsTo
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Stores::class);
     }
 
     public function destinationStore(): BelongsTo
     {
-        return $this->belongsTo(Store::class);
-    }
-
-    public function item(): BelongsTo
-    {
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Stores::class);
     }
 
     public function employee(): BelongsTo
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employees::class);
     }
 }

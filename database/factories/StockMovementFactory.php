@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Employees;
+use App\Models\Stores;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Employee;
-use App\Models\Item;
 use App\Models\StockMovement;
-use App\Models\Store;
 
 class StockMovementFactory extends Factory
 {
@@ -24,12 +23,12 @@ class StockMovementFactory extends Factory
     public function definition(): array
     {
         return [
-            'quantity' => $this->faker->numberBetween(-10000, 10000),
             'movement_type' => $this->faker->randomElement(["in","out","transfer"]),
-            'source_store_id' => Store::factory(),
-            'destination_store_id' => Store::factory(),
-            'item_id' => Item::factory(),
-            'employee_id' => Employee::factory(),
+            'source_store_id' => Stores::factory(),
+            'destination_store_id' => Stores::factory(),
+            'employee_id' => Employees::factory(),
+            'movement_date' => $this->faker->date(),
+            'reference' => $this->faker->regexify('[A-Za-z0-9]{20}'),
         ];
     }
 }
