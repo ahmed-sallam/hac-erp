@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SellInvoice extends Model
 {
@@ -26,6 +27,7 @@ class SellInvoice extends Model
         'sub_total',
         'vat',
         'total',
+        'reference'
     ];
 
     /**
@@ -45,6 +47,27 @@ class SellInvoice extends Model
         'total' => 'decimal:2',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $lastItem = SellInvoice::latest()->first();
+            if ($lastItem) {
+                $item_number = (int)$lastItem->invoice_number;
+                $item_number = $item_number + 1;
+                $model->invoice_number = $item_number . '';
+            } else {
+
+                $currentYear = date('Y');
+
+                $model->invoice_number = $currentYear . '0001';
+            }
+        });
+
+    }
+
+
+
     public function partner(): BelongsTo
     {
         return $this->belongsTo(Partners::class);
@@ -53,5 +76,10 @@ class SellInvoice extends Model
     public function sellQuotation(): BelongsTo
     {
         return $this->belongsTo(SellQuotation::class);
+    }
+
+    public function invoiceLines(): HasMany
+    {
+        return $this->hasMany(SellInvoiceLine::class);
     }
 }

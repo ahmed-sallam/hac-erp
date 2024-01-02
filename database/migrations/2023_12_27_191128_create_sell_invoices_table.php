@@ -25,6 +25,7 @@ return new class extends Migration
             $table->decimal('sub_total', 8, 2);
             $table->decimal('vat', 8, 2);
             $table->decimal('total', 8, 2);
+            $table->string('reference', 20);
             $table->timestamps();
         });
 

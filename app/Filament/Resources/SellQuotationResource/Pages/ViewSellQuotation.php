@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Filament\Resources\PurchaseQuotationResource\Pages;
+namespace App\Filament\Resources\SellQuotationResource\Pages;
 
-use App\Filament\Resources\PurchaseQuotationResource;
-use App\Models\MaterialRequest;
+use App\Filament\Resources\SellQuotationResource;
 use Filament\Actions;
-use Filament\Infolists\Components\Actions\Action;
 use Filament\Infolists\Components\Grid;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Tables\Table;
 use Illuminate\Support\Facades\App;
 
-class ViewPurchaseQuotation extends ViewRecord
+class ViewSellQuotation extends ViewRecord
 {
-    protected static string $resource = PurchaseQuotationResource::class;
+    protected static string $resource = SellQuotationResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -24,34 +23,29 @@ class ViewPurchaseQuotation extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
-
     public function infolist(Infolist $infolist): Infolist
     {
         $currentLocal = App::currentLocale();
 
         return $infolist
             ->schema([
-                Section::make(trans('purchase_quotation.quotation_details'))
+                Section::make(trans('sales.quotation_details'))
                     ->schema([
-                        TextEntry::make('materialRequest.order_number')
-                            ->label(trans('material_request.order_number')),
                         TextEntry::make('quotation_number')
-                            ->label(trans('purchase_quotation.quotation_number')),
+                            ->label(trans('sales.quotation_number')),
                         TextEntry::make('status')->label(trans('material_request.status'))
                             ->badge()
                             ->color(fn(string $state): string => match ($state) {
-                                'pending' => 'gray',
+                                'under_process' => 'gray',
                                 'completed' => 'success',
                                 'rejected' => 'danger',
                             }),
                         TextEntry::make('quotation_date')
-                            ->label(trans('purchase_quotation.quotation_date'))
+                            ->label(trans('sales.quotation_date'))
                             ->date(),
-                        TextEntry::make($currentLocal == 'ar' ? 'partner.name_ar':'partner.name_en')->label(trans('partner.supplier')),
+                        TextEntry::make($currentLocal == 'ar' ? 'partner.name_ar':'partner.name_en')->label(trans('partner.customer')),
                         TextEntry::make('updated_at')->label(trans('material_request.last_update'))->date(),
                     ])->columns(2),
-//                Section::make('Items')->label('Items')
-//                ->schema([
 
                 RepeatableEntry::make('quotationLines')->label(trans('material_request.items'))
                     ->schema([

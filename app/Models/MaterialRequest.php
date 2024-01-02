@@ -52,9 +52,9 @@ class MaterialRequest extends Model
         static::creating(function ($model) {
             $lastItem = MaterialRequest::latest()->first();
             if ($lastItem) {
-                $item_number =  (int) $lastItem->order_number;
+                $item_number = (int)$lastItem->order_number;
                 $item_number = $item_number + 1;
-                $model->order_number = $item_number.'';
+                $model->order_number = $item_number . '';
             } else {
 
                 $currentYear = date('Y');
@@ -79,4 +79,10 @@ class MaterialRequest extends Model
     {
         return $this->hasMany(MaterialRequestLine::class);
     }
+
+    /**
+     * @param $model
+     * @return void
+     */
+
 }

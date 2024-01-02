@@ -17,7 +17,7 @@ return [
     'status' => 'الحالة',
     'employee' => 'الموظف',
     'quantity' => 'الكمية',
-    'item_number' => 'رقم الطلب',
+    'item_number' => 'رقم الصنف',
     'item' => 'الصنف',
     'items' => 'الاصناف',
     'country' => 'الدولة',

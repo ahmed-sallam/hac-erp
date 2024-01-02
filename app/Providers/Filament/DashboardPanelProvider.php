@@ -28,14 +28,15 @@ class DashboardPanelProvider extends PanelProvider
             ->path('dashboard')
             ->login()
             ->colors([
-                'danger' => Color::Rose,
-                'gray' => Color::Gray,
-                'info' => Color::Blue,
-                'primary' => Color::Indigo,
-                'success' => Color::Emerald,
-                'warning' => Color::Orange,
+//                'danger' => Color::Rose,
+//                'gray' => Color::Gray,
+//                'info' => Color::Blue,
+                'primary' => '#fcaf13',
+//                'success' => Color::Emerald,
+//                'warning' => Color::Orange,
             ])
             ->font('Cairo', provider: GoogleFontProvider::class)
+            ->favicon('images/hac_fav.png')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

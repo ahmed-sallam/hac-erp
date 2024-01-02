@@ -33,6 +33,7 @@ class SellInvoiceFactory extends Factory
             'sub_total' => $this->faker->randomFloat(2, 0, 999999.99),
             'vat' => $this->faker->randomFloat(2, 0, 999999.99),
             'total' => $this->faker->randomFloat(2, 0, 999999.99),
+            'reference' => $this->faker->regexify('[A-Za-z0-9]{20}'),
         ];
     }
 }

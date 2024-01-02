@@ -30,6 +30,7 @@ class MaterialRequestResource extends Resource
     {
         $currentLocal = App::currentLocale();
         // todo: if item duplicated increase the quantity
+        // todo for all pur cycle add items from material order (allow change)
 
         return $form
             ->schema([

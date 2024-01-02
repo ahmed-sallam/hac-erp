@@ -104,6 +104,7 @@ class PurchaseQuotationResource extends Resource
                                 ->numeric()->columnSpan(1),
                         ]),
                     ])
+                    ->minItems(1)
                     ->columns(1)->columnSpan('full'),
             ]);
     }
@@ -144,9 +145,9 @@ class PurchaseQuotationResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+//                Tables\Actions\BulkActionGroup::make([
+//                    Tables\Actions\DeleteBulkAction::make(),
+//                ]),
             ]);
     }
 
