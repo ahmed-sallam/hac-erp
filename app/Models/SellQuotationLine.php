@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SellQuotationLine extends Model
 {
@@ -18,8 +18,8 @@ class SellQuotationLine extends Model
     protected $fillable = [
         'quantity',
         'price',
-        'vat',
         'item_id',
+        'store_id',
         'sell_quotation_id',
     ];
 
@@ -31,8 +31,8 @@ class SellQuotationLine extends Model
     protected $casts = [
         'id' => 'integer',
         'price' => 'decimal:2',
-        'vat' => 'decimal:2',
         'item_id' => 'integer',
+        'store_id' => 'integer',
         'sell_quotation_id' => 'integer',
     ];
 

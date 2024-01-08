@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\App;
 class SellInvoiceResource extends Resource
 {
     protected static ?string $model = SellInvoice::class;
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

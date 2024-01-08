@@ -25,13 +25,16 @@ class Items extends Model
         'is_set',
         'is_original',
         'item_image',
-        'category_image',
+        'unit_image',
         'main_brand_id',
         'sub_brand_id',
         'category_id',
         'country_id',
-        'store_id',
-        'store_location_id',
+//        'store_id',
+//        'store_location_id',
+        'is_active',
+        'sale_price',
+        'cost_price'
     ];
 
     /**
@@ -49,8 +52,11 @@ class Items extends Model
         'sub_brand_id' => 'integer',
         'category_id' => 'integer',
         'country_id' => 'integer',
-        'store_id' => 'integer',
-        'store_location_id' => 'integer',
+//        'store_id' => 'integer',
+//        'store_location_id' => 'integer',
+        'is_active'=>'boolean',
+        'sale_price'=>'decimal:2',
+        'cost_price'=>'decimal:2',
     ];
 
     public function mainBrand(): BelongsTo
@@ -73,13 +79,13 @@ class Items extends Model
         return $this->belongsTo(Countries::class);
     }
 
-    public function store(): BelongsTo
-    {
-        return $this->belongsTo(Stores::class);
-    }
+//    public function store(): BelongsTo
+//    {
+//        return $this->belongsTo(Stores::class);
+//    }
 
-    public function storeLocation(): BelongsTo
-    {
-        return $this->belongsTo(StoreLocations::class);
-    }
+//    public function storeLocation(): BelongsTo
+//    {
+//        return $this->belongsTo(StoreLocations::class);
+//    }
 }

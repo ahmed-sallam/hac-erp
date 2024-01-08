@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('sell_quotation_lines', function (Blueprint $table) {
+        Schema::create('sell_return_invoice_lines', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('store_id')->constrained('stores');
-            $table->foreignId('item_id')->constrained('items');
             $table->unsignedInteger('quantity');
             $table->decimal('price', 8, 2);
-            //            $table->decimal('discount', 8, 2);
-            //            $table->decimal('vat', 8, 2);
-            $table->foreignId('sell_quotation_id')->constrained('sell_quotations');
+            $table->decimal('discount', 8, 2);
+            $table->decimal('vat', 8, 2);
+            $table->foreignId('item_id')->constrained();
+            $table->foreignId('sell_return_invoice_id')->constrained();
+            $table->foreignId('store_id')->constrained();
             $table->timestamps();
-            $table->unique(['store_id', 'item_id', 'sell_quotation_id'], 'sell_quotation_lines_unique');
+            $table->unique(['store_id', 'item_id', 'sell_return_invoice_id'], 'sell_return_invoice_lines_unique');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sell_quotation_lines');
+        Schema::dropIfExists('sell_return_invoice_lines');
     }
 };

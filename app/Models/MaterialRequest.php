@@ -46,7 +46,7 @@ class MaterialRequest extends Model
         'status'=>'pending',
     ];
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
         static::creating(function ($model) {

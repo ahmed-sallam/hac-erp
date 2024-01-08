@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('city_en', 25);
             $table->string('name_ar', 25);
             $table->string('name_en', 25);
+            $table->enum('type', ['virtual', 'physical'])->default('physical');
+
         });
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class SellInvoice extends Model
+class SellReturnInvoice extends Model
 {
     use HasFactory;
 
@@ -23,6 +23,7 @@ class SellInvoice extends Model
         'invoice_type',
         'partner_id',
         'employee_id',
+        'sell_invoice_id',
         'customer_request_id',
         'sell_quotation_id',
         'stock_movement_id',
@@ -31,7 +32,7 @@ class SellInvoice extends Model
         'total',
         'vat',
         'net_total',
-        'notes'
+        'notes',
     ];
 
     /**
@@ -45,13 +46,14 @@ class SellInvoice extends Model
         'delivery_date' => 'date',
         'partner_id' => 'integer',
         'employee_id' => 'integer',
+        'sell_invoice_id' => 'integer',
         'customer_request_id' => 'integer',
         'sell_quotation_id' => 'integer',
         'stock_movement_id' => 'integer',
-        'discount' => 'decimal:2',
         'sub_total' => 'decimal:2',
-        'vat' => 'decimal:2',
+        'discount' => 'decimal:2',
         'total' => 'decimal:2',
+        'vat' => 'decimal:2',
         'net_total' => 'decimal:2',
     ];
 
@@ -59,8 +61,8 @@ class SellInvoice extends Model
     {
         parent::boot();
         static::creating(function ($model) {
-            $lastItem = SellInvoice::latest()->first();
-            $prefix = 'SI';
+            $lastItem = SellReturnInvoice::latest()->first();
+            $prefix = 'SR';
             if ($lastItem) {
                 $item_string = substr($lastItem->invoice_number, 2);
                 $item_number = (int)$item_string;
@@ -73,11 +75,24 @@ class SellInvoice extends Model
         });
     }
 
-
-
     public function partner(): BelongsTo
     {
         return $this->belongsTo(Partners::class);
+    }
+
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employees::class);
+    }
+
+    public function sellInvoice(): BelongsTo
+    {
+        return $this->belongsTo(SellInvoice::class);
+    }
+
+    public function customerRequest(): BelongsTo
+    {
+        return $this->belongsTo(CustomerRequest::class);
     }
 
     public function sellQuotation(): BelongsTo
@@ -85,22 +100,12 @@ class SellInvoice extends Model
         return $this->belongsTo(SellQuotation::class);
     }
 
-    public function invoiceLines(): HasMany
-    {
-        return $this->hasMany(SellInvoiceLine::class);
-    }
-
     public function stockMovement(): BelongsTo
     {
         return $this->belongsTo(StockMovement::class);
     }
-    public function customerRequest(): BelongsTo
+    public function invoiceLines(): HasMany
     {
-        return $this->belongsTo(CustomerRequest::class);
-    }
-
-    public function employee(): BelongsTo
-    {
-        return $this->belongsTo(Employees::class);
+        return $this->hasMany(SellReturnInvoiceLine::class);
     }
 }

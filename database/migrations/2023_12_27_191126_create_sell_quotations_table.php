@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -17,8 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('quotation_number', 20)->unique();
             $table->date('quotation_date');
-            $table->enum('status', ["under_process","completed","rejected"]);
-            $table->foreignId('partner_id')->constrained();
+            $table->enum('status', ["under_process", "completed", "rejected"]);
+            $table->foreignId('partner_id')->constrained('partners');
+            $table->foreignId('employee_id')->constrained('employees');
+            $table->foreignId('customer_request_id')->nullable(true)->constrained('customer_requests');
+            $table->longText('notes');
             $table->timestamps();
         });
 

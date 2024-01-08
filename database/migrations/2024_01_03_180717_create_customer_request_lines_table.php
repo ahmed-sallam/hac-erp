@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('stock_movement_lines', function (Blueprint $table) {
+        Schema::create('customer_request_lines', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('store_id')->constrained();
+            $table->foreignId('customer_request_id')->constrained('customer_requests');
             $table->foreignId('item_id')->constrained('items');
             $table->unsignedInteger('quantity');
-            $table->foreignId('stock_movement_id')->constrained('stock_movements');
             $table->timestamps();
+            $table->unique(['store_id', 'item_id', 'customer_request_id'], 'customer_request_lines_unique');
         });
 
         Schema::enableForeignKeyConstraints();
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_movement_lines');
+        Schema::dropIfExists('customer_request_lines');
     }
 };

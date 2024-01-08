@@ -19,6 +19,10 @@ return [
     'invoice_value' => 'قيمة الفاتورة',
     'sub_total' => 'الاجمالي الفرعي',
     'discount' => 'خصم',
+    'request_date' => 'تاريخ الطلب',
+    'request_number' => 'رقم الطلب',
+    'customer_request' => 'طلب العميل',
+    'customer_requests' => 'طلبات العملاء',
     '' => '',
 
 

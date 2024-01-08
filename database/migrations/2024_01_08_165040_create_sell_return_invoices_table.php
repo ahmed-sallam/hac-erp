@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -13,17 +13,18 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('sell_invoices', function (Blueprint $table) {
+        Schema::create('sell_return_invoices', function (Blueprint $table) {
             $table->id();
             $table->string('invoice_number', 20)->unique();
             $table->date('invoice_date');
             $table->date('delivery_date');
-            $table->enum('invoice_type', ["cash", "credit"]);
-            $table->foreignId('partner_id')->constrained('partners');
-            $table->foreignId('employee_id')->constrained('employees');
-            $table->foreignId('customer_request_id')->nullable(true)->constrained('customer_requests');
-            $table->foreignId('sell_quotation_id')->nullable(true)->constrained('sell_quotations');
-            $table->foreignId('stock_movement_id')->nullable(true)->constrained('stock_movements');
+            $table->enum('invoice_type', ["cash","credit"]);
+            $table->foreignId('partner_id')->constrained();
+            $table->foreignId('employee_id')->constrained('employeesses');
+            $table->foreignId('sell_invoice_id')->constrained();
+            $table->foreignId('customer_request_id')->nullable()->constrained();
+            $table->foreignId('sell_quotation_id')->nullable()->constrained();
+            $table->foreignId('stock_movement_id')->nullable()->constrained();
             $table->decimal('sub_total', 8, 2);
             $table->decimal('discount', 8, 2);
             $table->decimal('total', 8, 2);
@@ -41,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sell_invoices');
+        Schema::dropIfExists('sell_return_invoices');
     }
 };

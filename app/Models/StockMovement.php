@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StockMovement extends Model
 {
@@ -23,6 +23,7 @@ class StockMovement extends Model
         'employee_id',
         'movement_date',
         'reference',
+        'notes',
     ];
 
     /**
@@ -53,7 +54,7 @@ class StockMovement extends Model
         return $this->belongsTo(Employees::class);
     }
 
-    public function movementLines():HasMany
+    public function movementLines(): HasMany
     {
         return $this->hasMany(StockMovementLine::class);
     }

@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Filament\Resources;
-
 use App\Filament\Resources\SellQuotationResource\Pages;
 use App\Filament\Resources\SellQuotationResource\RelationManagers;
 use App\Models\SellQuotation;
@@ -18,17 +16,15 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\App;
-
 class SellQuotationResource extends Resource
 {
     protected static ?string $model = SellQuotation::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
         $currentLocal = App::currentLocale();
-
         return $form
             ->schema([
                 Section::make(trans('sales.quotation_details'))

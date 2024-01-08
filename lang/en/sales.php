@@ -19,6 +19,10 @@ return [
     'invoice_value' => 'Invoice value',
     'sub_total' => 'Sub total',
     'discount' => 'Discount',
+    'request_date' => 'Request date',
+    'request_number' => 'Request number',
+    'customer_request' => 'Customer request',
+    'customer_requests' => 'Customer requests',
     '' => '',
 
 

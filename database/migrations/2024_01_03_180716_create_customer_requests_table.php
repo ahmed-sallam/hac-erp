@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('stock_movements', function (Blueprint $table) {
+        Schema::create('customer_requests', function (Blueprint $table) {
             $table->id();
-            $table->enum('movement_type', ["sale", "sale_return", "transfer", "purchase", "purchase_return", "scrap"]);
-            $table->foreignId('source_store_id')->constrained('stores');
-            $table->foreignId('destination_store_id')->constrained('stores');
+            $table->string('number', 20)->unique();
+            $table->date('date');
+            $table->foreignId('partner_id')->constrained('partners');
             $table->foreignId('employee_id')->constrained('employees');
-            $table->date('movement_date');
-            $table->string('reference', 20);
             $table->longText('notes');
             $table->timestamps();
         });
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_movements');
+        Schema::dropIfExists('customer_requests');
     }
 };

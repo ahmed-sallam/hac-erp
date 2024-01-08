@@ -21,6 +21,7 @@ class Stores extends Model
         'city_en',
         'name_ar',
         'name_en',
+        'type'
     ];
 
     /**

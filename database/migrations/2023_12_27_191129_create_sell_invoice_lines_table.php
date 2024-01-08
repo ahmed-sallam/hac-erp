@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -15,13 +15,15 @@ return new class extends Migration
 
         Schema::create('sell_invoice_lines', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('store_id')->constrained();
             $table->integer('quantity');
             $table->decimal('price', 8, 2);
-            $table->decimal('vat', 8, 2);
             $table->decimal('discount', 8, 2);
+            $table->decimal('vat', 8, 2);
             $table->foreignId('item_id')->constrained();
             $table->foreignId('sell_invoice_id')->constrained();
             $table->timestamps();
+            $table->unique(['store_id', 'item_id', 'sell_invoice_id'], 'sell_invoice_lines_unique');
         });
 
         Schema::enableForeignKeyConstraints();
