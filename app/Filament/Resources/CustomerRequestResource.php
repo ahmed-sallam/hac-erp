@@ -2,24 +2,27 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CustomerRequestResource\Pages;
-use App\Filament\Resources\CustomerRequestResource\RelationManagers;
-use App\Models\CustomerRequest;
-use App\Models\Employees;
 use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Get;
+use Filament\Forms\Form;
+use App\Models\Employees;
 use Filament\Tables\Table;
-use Icetalker\FilamentTableRepeater\Forms\Components\TableRepeater;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\CustomerRequest;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\RichEditor;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\CustomerRequestResource\Pages;
+use Icetalker\FilamentTableRepeater\Forms\Components\TableRepeater;
+use App\Filament\Resources\CustomerRequestResource\RelationManagers;
 
 class CustomerRequestResource extends Resource
 {
@@ -36,15 +39,18 @@ class CustomerRequestResource extends Resource
             ->schema([
                 TextInput::make('number')
                     ->label(trans('sales.request_number'))
-                    ->disabled()
-                    ->maxLength(20),
+                    ->disabled(),
                 DatePicker::make('date')
                     ->label(trans('sales.request_date'))
                     ->date()
-                    ->required(),
+                    ->required()
+                    ->native(false),
                 Select::make('partner_id')
-                    ->relationship(name: 'partner', titleAttribute: $currentLocal == 'ar' ? 'name_ar' : 'name_en',
-                        modifyQueryUsing: fn(Builder $query)=>$query->where('partner_type', '=', 'customer'))
+                    ->relationship(
+                        name: 'partner',
+                        titleAttribute: $currentLocal == 'ar' ? 'name_ar' : 'name_en',
+                        modifyQueryUsing: fn (Builder $query) => $query->where('partner_type', '=', 'customer')
+                    )
                     ->label(trans('partner.customer'))
                     ->native(false)
                     ->searchable()
@@ -57,6 +63,8 @@ class CustomerRequestResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
+                RichEditor::make('notes')
+                    ->label(trans('sales.notes'))->columnSpan(2),
 
                 TableRepeater::make('requestLines')
                     ->label(trans('material_request.items'))
@@ -66,9 +74,16 @@ class CustomerRequestResource extends Resource
                             ->relationship(name: 'item', titleAttribute: 'item_number')
                             ->label(trans('material_request.item_number'))
                             ->getOptionLabelFromRecordUsing(
-                                fn($record) => "{$record->item_number} - {$record->mainBrand->name_ar} - {$record->subBrand->name_ar} - {$record->country->name_ar} ")
+                                fn ($record) => "{$record->item_number} - {$record->mainBrand->name_ar} - {$record->subBrand->name_ar} - {$record->country->name_ar} "
+                            )
                             ->searchable()
                             ->preload()
+                            ->disableOptionWhen(function ($value, $state, Get $get) {
+                                return collect($get('../*.item_id'))
+                                    ->reject(fn ($id) => $id == $state)
+                                    ->filter()
+                                    ->contains($value);
+                            })
                             ->required()
                             ->native(false),
                         TextInput::make('quantity')->label(trans('material_request.quantity'))
@@ -76,8 +91,10 @@ class CustomerRequestResource extends Resource
                             ->minValue(1)
                             ->numeric(),
                         Select::make('store_id')
-                            ->relationship(name: 'store', titleAttribute: $currentLocal == 'ar' ? 'name_ar' : 'name_en',
-                                modifyQueryUsing: fn(Builder $query)=>$query->where('type', '!=', 'virtual')
+                            ->relationship(
+                                name: 'store',
+                                titleAttribute: $currentLocal == 'ar' ? 'name_ar' : 'name_en',
+                                modifyQueryUsing: fn (Builder $query) => $query->where('type', '!=', 'virtual')
                             )->label(trans('stores.store'))
                             ->searchable()
                             ->preload()
@@ -85,7 +102,7 @@ class CustomerRequestResource extends Resource
                             ->native(false),
                     ])
                     ->minItems(1)
-                    ->columnSpan('full')
+                    ->columnSpanFull()
                     ->colStyles([
                         'item_id' => 'width: 50%;',
                     ]),
@@ -102,11 +119,11 @@ class CustomerRequestResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('number')
                     ->searchable(),
-                Tables\Columns\TextColumn::make($currentLocal== 'ar' ?'partner.name_ar': 'partner.name_en')
+                Tables\Columns\TextColumn::make($currentLocal == 'ar' ? 'partner.name_ar' : 'partner.name_en')
                     ->label(trans('partner.customer'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make($currentLocal== 'ar' ?'employee.name_ar': 'employee.name_en')
+                Tables\Columns\TextColumn::make($currentLocal == 'ar' ? 'employee.name_ar' : 'employee.name_en')
                     ->label(trans('material_request.employee'))
                     ->numeric()
                     ->sortable(),
@@ -120,14 +137,14 @@ class CustomerRequestResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
                 ]),
             ])
             ->bulkActions([
-//                Tables\Actions\BulkActionGroup::make([
-//                    Tables\Actions\DeleteBulkAction::make(),
-//                ]),
+                //                Tables\Actions\BulkActionGroup::make([
+                //                    Tables\Actions\DeleteBulkAction::make(),
+                //                ]),
             ]);
     }
 

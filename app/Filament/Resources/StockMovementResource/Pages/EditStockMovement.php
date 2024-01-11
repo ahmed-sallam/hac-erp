@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\StockMovementResource\Pages;
 
-use App\Filament\Resources\StockMovementResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\StockMovementResource;
 
 class EditStockMovement extends EditRecord
 {
@@ -14,7 +14,7 @@ class EditStockMovement extends EditRecord
     {
         return [
             Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            // Actions\DeleteAction::make(),
         ];
     }
 }

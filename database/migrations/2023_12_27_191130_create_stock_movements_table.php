@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignId('destination_store_id')->constrained('stores');
             $table->foreignId('employee_id')->constrained('employees');
             $table->date('movement_date');
-            $table->string('reference', 20);
-            $table->longText('notes');
+            $table->string('reference', 20)->nullable();
+            $table->longText('notes')->nullable();
             $table->timestamps();
         });
 

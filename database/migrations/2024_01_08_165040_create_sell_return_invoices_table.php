@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('invoice_number', 20)->unique();
             $table->date('invoice_date');
             $table->date('delivery_date');
-            $table->enum('invoice_type', ["cash","credit"]);
+            $table->enum('invoice_type', ["cash", "credit"]);
             $table->foreignId('partner_id')->constrained();
             $table->foreignId('employee_id')->constrained('employeesses');
             $table->foreignId('sell_invoice_id')->constrained();
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->decimal('total', 8, 2);
             $table->decimal('vat', 8, 2);
             $table->decimal('net_total', 8, 2);
-            $table->longText('notes');
+            $table->longText('notes')->nullable();
             $table->timestamps();
         });
 

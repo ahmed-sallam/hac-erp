@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('partner_id')->constrained('partners');
             $table->foreignId('employee_id')->constrained('employees');
             $table->foreignId('customer_request_id')->nullable(true)->constrained('customer_requests');
-            $table->longText('notes');
+            $table->longText('notes')->nullable();
             $table->timestamps();
         });
 

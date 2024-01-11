@@ -6,6 +6,7 @@ use App\Models\Items;
 use App\Models\Stores;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Partners;
 use App\Models\Countries;
 use App\Models\Employees;
 use App\Models\SubBrands;
@@ -259,6 +260,58 @@ class DatabaseSeeder extends Seeder
             'is_active' => true,
             'sale_price' => 20.50,
             'cost_price' => 5.25,
+        ]);
+
+        $partner1 = Partners::create([
+            'name_ar' => 'شركة أمثال',
+            'name_en' => 'Sample Company',
+            'partner_type' => 'supplier',
+            'mobile' => '+201234567890',
+            'email' => 'sample_company@example.com',
+            'payment_type' => 'cash',
+            'credit_limit' => 5000,
+            'credit_period' => 30,
+            'country_id' => 1,
+            'employee_id' => 1,
+        ]);
+
+        $partner2 = Partners::create([
+            'name_ar' => 'شركة عين الجمال',
+            'name_en' => 'Beauty Eyes Company',
+            'partner_type' => 'customer',
+            'mobile' => '+966501234567',
+            'email' => 'beauty_eyes@example.com',
+            'payment_type' => 'credit',
+            'credit_limit' => 10000,
+            'credit_period' => 45,
+            'country_id' => 2,
+            'employee_id' => 2,
+        ]);
+
+        $partner3 = Partners::create([
+            'name_ar' => 'شركة العبدلي',
+            'name_en' => 'Al-Abduli Company',
+            'partner_type' => 'supplier',
+            'mobile' => '+971501234567',
+            'email' => 'abduli_co@example.com',
+            'payment_type' => 'cash',
+            'credit_limit' => 8000,
+            'credit_period' => 60,
+            'country_id' => 3,
+            'employee_id' => 2,
+        ]);
+
+        $partner4 = Partners::create([
+            'name_ar' => 'متجر النجوم',
+            'name_en' => 'Stars Store',
+            'partner_type' => 'customer',
+            'mobile' => '+202345678901',
+            'email' => 'stars_store@example.com',
+            'payment_type' => 'credit',
+            'credit_limit' => 12000,
+            'credit_period' => 90,
+            'country_id' => 1,
+            'employee_id' => 1,
         ]);
     }
 }

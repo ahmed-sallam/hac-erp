@@ -2,15 +2,16 @@
 
 namespace App\Filament\Resources\CustomerRequestResource\Pages;
 
-use App\Filament\Resources\CustomerRequestResource;
 use Filament\Actions;
+use Filament\Infolists\Infolist;
+use Illuminate\Support\Facades\App;
 
 use Filament\Infolists\Components\Grid;
-use Filament\Infolists\Components\RepeatableEntry;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Pages\ViewRecord;
-use Illuminate\Support\Facades\App;
+use Filament\Forms\Components\RichEditor;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\RepeatableEntry;
+use App\Filament\Resources\CustomerRequestResource;
 
 class ViewCustomerRequest extends ViewRecord
 {
@@ -30,14 +31,24 @@ class ViewCustomerRequest extends ViewRecord
         return $infolist
             ->schema([
                 TextEntry::make('number')
+                    ->inlineLabel()
                     ->label(trans('sales.request_number')),
                 TextEntry::make('date')
                     ->label(trans('sales.request_date'))
+                    ->inlineLabel()
                     ->date(),
                 TextEntry::make($currentLocal == 'ar' ? 'partner.name_ar' : 'partner.name_en')
+                    ->inlineLabel()
                     ->label(trans('partner.customer')),
                 TextEntry::make($currentLocal == 'ar' ? 'employee.name_ar' : 'employee.name_en')
+                    ->inlineLabel()
                     ->label(trans('material_request.employee')),
+                TextEntry::make('notes')
+                    ->markdown()
+                    ->inlineLabel()
+                    ->label(trans('sales.notes'))
+                    ->columnSpan(2),
+
 
 
                 RepeatableEntry::make('requestLines')

@@ -2,21 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\StockMovementResource\Pages;
-use App\Filament\Resources\StockMovementResource\RelationManagers;
-use App\Models\StockMovement;
 use Filament\Forms;
+use Filament\Tables;
+use Filament\Forms\Get;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use App\Models\StockMovement;
+use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
+use Illuminate\Support\Facades\App;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Support\Contracts\HasLabel;
-use Filament\Tables;
-use Filament\Tables\Table;
+use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\App;
+use App\Filament\Resources\StockMovementResource\Pages;
+use App\Filament\Resources\StockMovementResource\RelationManagers;
 
 class StockMovementResource extends Resource
 {
@@ -31,49 +33,49 @@ class StockMovementResource extends Resource
         $currentLocal = App::currentLocale();
         return $form
             ->schema([
-                Section::make(trans('stock.movement_details'))
-                    ->label(trans('stock.movement_details'))
-                    ->schema([
-                        Grid::make([
-                            'sm' => 1,
-                            'xl' => 2,
-                        ])
-                            ->schema(
-                                [
-                                     Forms\Components\Select::make('movement_type')->label(trans('stock.movement_type'))
-                                     ->options(MovementType::class)
-                                     ->native(false)
-                                     ->required(),
-                                    Forms\Components\Select::make('source_store_id')
-                                        ->relationship(name: 'sourceStore', titleAttribute:
-                                            $currentLocal == 'ar' ? 'name_ar' : 'name_en')->label(trans('stock.source_store'))
-                                        ->native(false)
-                                        ->searchable()
-                                        ->preload()
-                                        ->required(),
-                                    Forms\Components\Select::make('destination_store_id')
-                                        ->relationship(name: 'destinationStore', titleAttribute:
-                                            $currentLocal == 'ar' ? 'name_ar' : 'name_en')->label(trans('stock.destination_store'))
-                                        ->native(false)
-                                        ->searchable()
-                                        ->preload()
-                                        ->required(),
-                                    Forms\Components\Select::make('employee_id')
-                                        ->relationship(name: 'employee', titleAttribute:
-                                            $currentLocal == 'ar' ? 'name_ar' : 'name_en')->label(trans('material_request.employee'))
-                                        ->native(false)
-                                        ->searchable()
-                                        ->preload()
-                                        ->required(),
-                                    Forms\Components\DatePicker::make('movement_date')->label(trans('stock.movement_date'))
-                                        ->required()
-                                        ->native(false),
-                                    TextInput::make('reference')->label(trans('stock.reference'))
-                                        ->maxLength(20),
-                                ]
-                            ),
+                Forms\Components\Select::make('movement_type')->label(trans('stock.movement_type'))
+                    ->options(MovementType::class)
+                    ->native(false)
+                    ->required(),
+                Forms\Components\Select::make('source_store_id')
+                    ->relationship(name: 'sourceStore', titleAttribute: $currentLocal == 'ar' ? 'name_ar' : 'name_en')->label(trans('stock.source_store'))
+                    ->disableOptionWhen(function ($value, $state, Get $get) {
+                        return collect($get('destination_store_id'))
+                            ->reject(fn ($id) => $id == $state)
+                            ->filter()
+                            ->contains($value);
+                    })
+                    ->native(false)
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Forms\Components\Select::make('destination_store_id')
+                    ->relationship(name: 'destinationStore', titleAttribute: $currentLocal == 'ar' ? 'name_ar' : 'name_en')->label(trans('stock.destination_store'))
+                    ->disableOptionWhen(function ($value, $state, Get $get) {
+                        return collect($get('source_store_id'))
+                            ->reject(fn ($id) => $id == $state)
+                            ->filter()
+                            ->contains($value);
+                    })
+                    ->native(false)
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Forms\Components\Select::make('employee_id')
+                    ->relationship(name: 'employee', titleAttribute: $currentLocal == 'ar' ? 'name_ar' : 'name_en')->label(trans('material_request.employee'))
+                    ->native(false)
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Forms\Components\DatePicker::make('movement_date')->label(trans('stock.movement_date'))
+                    ->required()
+                    ->native(false),
+                TextInput::make('reference')->label(trans('stock.reference'))
+                    ->maxLength(20),
 
-                    ]),
+                RichEditor::make('notes')
+                    ->label(trans('sales.notes'))->columnSpan(2),
+
 
                 \Icetalker\FilamentTableRepeater\Forms\Components\TableRepeater::make('movementLines')
                     ->label(trans('material_request.items'))
@@ -84,7 +86,8 @@ class StockMovementResource extends Resource
                             ->relationship(name: 'item', titleAttribute: 'item_number')
                             ->label(trans('material_request.item_number'))
                             ->getOptionLabelFromRecordUsing(
-                                fn($record) => "{$record->item_number} // {$record->mainBrand->name_ar} // {$record->subBrand->name_ar} // {$record->country->name_ar} ")
+                                fn ($record) => "{$record->item_number} // {$record->mainBrand->name_ar} // {$record->subBrand->name_ar} // {$record->country->name_ar} "
+                            )
                             ->searchable()
                             ->preload()
                             ->required()
@@ -94,7 +97,6 @@ class StockMovementResource extends Resource
                             ->minValue(1)
                             ->numeric(),
                     ])
-                    ->collapsible()
                     ->minItems(1)
                     ->columnSpan('full')
                     ->colStyles([
@@ -113,15 +115,15 @@ class StockMovementResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
-            Tables\Columns\TextColumn::make('movement_date')->label(trans('stock.movement_date'))
-                ->date(),
-            Tables\Columns\TextColumn::make('movement_type')->label(trans('stock.movement_type')),
-            Tables\Columns\TextColumn::make($currentLocal == 'ar' ?
-                'sourceStore.name_ar': 'sourceStore.name_en')->label(trans('stock.source_store')),
-            Tables\Columns\TextColumn::make($currentLocal == 'ar' ?
-                'destinationStore.name_ar': 'destinationStore.name_en')->label(trans('stock.destination_store')),
-            Tables\Columns\TextColumn::make($currentLocal == 'ar' ?
-                'employee.name_ar': 'employee.name_en')->label(trans('material_request.employee')),
+                Tables\Columns\TextColumn::make('movement_date')->label(trans('stock.movement_date'))
+                    ->date(),
+                Tables\Columns\TextColumn::make('movement_type')->label(trans('stock.movement_type')),
+                Tables\Columns\TextColumn::make($currentLocal == 'ar' ?
+                    'sourceStore.name_ar' : 'sourceStore.name_en')->label(trans('stock.source_store')),
+                Tables\Columns\TextColumn::make($currentLocal == 'ar' ?
+                    'destinationStore.name_ar' : 'destinationStore.name_en')->label(trans('stock.destination_store')),
+                Tables\Columns\TextColumn::make($currentLocal == 'ar' ?
+                    'employee.name_ar' : 'employee.name_en')->label(trans('material_request.employee')),
             ])
             ->filters([
                 //
@@ -154,7 +156,8 @@ class StockMovementResource extends Resource
         ];
     }
 
-    public static function getModelLabel(): string{
+    public static function getModelLabel(): string
+    {
         return trans('stock.stock_movement');
     }
 
@@ -166,14 +169,15 @@ class StockMovementResource extends Resource
     {
         return trans('stores.store_management');
     }
-
-
 }
 
 enum MovementType: string implements HasLabel
 {
-    case In = 'in';
-    case Out = 'out';
+    case Sale = 'sale';
+    case SaleReturn = 'sale_return';
+    case Purchase = 'purchase';
+    case PurchaseReturn = 'purchase_return';
+    case Scrap = 'scrap';
     case Transfer = 'transfer';
 
 
@@ -181,6 +185,9 @@ enum MovementType: string implements HasLabel
     {
         return $this->name;
     }
-
-
 }
+
+// todo: addvalidation on selceted stores when do specific operation (sale, purchase,.....)
+
+//todo: add balance validation
+// todo:add dynamic reference

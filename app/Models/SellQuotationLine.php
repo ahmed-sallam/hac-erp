@@ -45,4 +45,9 @@ class SellQuotationLine extends Model
     {
         return $this->belongsTo(SellQuotation::class);
     }
+
+    public function store(): BelongsTo
+    {
+        return $this->belongsTo(Stores::class);
+    }
 }

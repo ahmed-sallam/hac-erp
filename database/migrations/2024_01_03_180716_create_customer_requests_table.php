@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('date');
             $table->foreignId('partner_id')->constrained('partners');
             $table->foreignId('employee_id')->constrained('employees');
-            $table->longText('notes');
+            $table->longText('notes')->nullable();
             $table->timestamps();
         });
 

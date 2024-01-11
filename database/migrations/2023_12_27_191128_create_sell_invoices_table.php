@@ -29,7 +29,7 @@ return new class extends Migration
             $table->decimal('total', 8, 2);
             $table->decimal('vat', 8, 2);
             $table->decimal('net_total', 8, 2);
-            $table->longText('notes');
+            $table->longText('notes')->nullable();
             $table->timestamps();
         });
 
